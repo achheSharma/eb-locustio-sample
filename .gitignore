@@ -1,1 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -23,8 +23,19 @@ problem_language_id_map = {
     2: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512]
 }
 
+def login(l):
+    l.client.post("/users/sign_in/", {"user[email]":"abhimanyu@interviewbit.com", "user[password]":"12!@abAB<>"})
+
+def logout(l):
+    l.client.post("/users/sign_out/", {"_method":"delete"})
+
 class MyTaskSet(TaskSet):
     
+    def on_start(self):
+        login(self)
+
+    def on_stop(self):
+        logout(self)
 
     #open the test programming_language_id
     @task(100)

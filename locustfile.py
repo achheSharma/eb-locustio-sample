@@ -15,20 +15,28 @@ import random
 from locust import HttpLocust, TaskSet, task
 
 class MyTaskSet(TaskSet):
+    test_id = 'ksdjfhkdfjhg'
+    #open the test page
+    @task(100)
+    def index(self):
+        response = self.client.get("/test/" + test_id + '/')
+
+    #fetch code
     @task(1000)
     def index(self):
-        response = self.client.get("/")
+        response = self.client.get("/test/" + test_id + "/get-code")
 
-    # This task will 15 times for every 1000 runs of the above task
-    # @task(15)
-    # def about(self):
-    #     self.client.get("/blog")
 
-    # This task will run once for every 1000 runs of the above task
-    # @task(1)
-    # def about(self):
-    #     id = id_generator()
-    #     self.client.post("/signup", {"email": "example@example.com", "name": "Test"})
+    #This task will 15 times for every 1000 runs of the above task
+    @task(15)
+    def about(self):
+        self.client.get("/blog")
+
+    #This task will run once for every 1000 runs of the above task
+    @task(1)
+    def about(self):
+        id = id_generator()
+        self.client.post("/signup", {"email": "example@example.com", "name": "Test"})
 
 class MyLocust(HttpLocust):
     host = os.getenv('TARGET_URL', "http://localhost")

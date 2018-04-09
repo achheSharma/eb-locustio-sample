@@ -14,32 +14,57 @@ import string
 import random
 from locust import HttpLocust, TaskSet, task
 
+#test data
+global test_id
+test_id = 'ksdjfhkdfjhg'
+problem_ids = [1,2,3]
+problem_language_id_map = {
+    1: [2,3,4],
+    2: [1,2, 3]
+}
+
 class MyTaskSet(TaskSet):
-    test_id = 'ksdjfhkdfjhg'
-    #open the test page
+    
+
+    #open the test programming_language_id
     @task(100)
-    def index(self):
+    def index(self):    
         response = self.client.get("/test/" + test_id + '/')
 
     #fetch code
-    @task(1000)
-    def index(self):
-        response = self.client.get("/test/" + test_id + "/get-code")
+    @task(600)
+    def fetch_code(self):
+        #todo randomize problem id and lanaguege id
+        programming_language_id = 1
+        problem_id = 2
+        response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + "&problem_id=" + str(problem_id))
 
+    # #save code
+    @task(1500)
+    def save_code(self):
+        programming_language_id = 1
+        problem_id = 2
+        response = self.client.post("/test/" + str(test_id) + "/save-code/", {
+            "problem_id": problem_id, 
+            "programming_language_id": programming_language_id,
+            "is_objective": 'false',
+            "problem_code": 'some content'
+        })
 
-    #This task will 15 times for every 1000 runs of the above task
-    @task(15)
-    def about(self):
-        self.client.get("/blog")
-
-    #This task will run once for every 1000 runs of the above task
-    @task(1)
-    def about(self):
-        id = id_generator()
-        self.client.post("/signup", {"email": "example@example.com", "name": "Test"})
+    # #Submit Code
+    @task(80)
+    def submit_code(self):
+        programming_language_id = 1
+        problem_id = 2
+        self.client.post("/test/" + test_id + "/evaluate-code/", {
+            "problem_id": problem_id, 
+            "programming_language_id": programming_language_id,
+            "solution_code": 'some code',  #TODO randomize between function code and various type of non functioning code
+            "submission_type": 0
+        })
 
 class MyLocust(HttpLocust):
-    host = os.getenv('TARGET_URL', "http://localhost")
+    host = os.getenv('TARGET_URL', "http://localhost:3000")
     task_set = MyTaskSet
     min_wait = 90
     max_wait = 100

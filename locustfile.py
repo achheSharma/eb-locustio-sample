@@ -71,7 +71,7 @@ class MyTaskSet(TaskSet):
         self.client.post("/test/" + test_id + "/evaluate-code/", {
             "problem_id": problem_id, 
             "programming_language_id": programming_language_id,
-            "solution_code": 'some code',  #TODO randomize between function code and various type of non functioning code
+            "submission_content": 'some code',  #TODO randomize between function code and various type of non functioning code
             "submission_type": 'submit'
         }, {
         'X-Requested-With': 'XMLHttpRequest'

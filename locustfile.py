@@ -67,11 +67,14 @@ class MyTaskSet(TaskSet):
     def submit_code(self):
         programming_language_id = 1
         problem_id = 2
+
         self.client.post("/test/" + test_id + "/evaluate-code/", {
             "problem_id": problem_id, 
             "programming_language_id": programming_language_id,
             "solution_code": 'some code',  #TODO randomize between function code and various type of non functioning code
             "submission_type": 0
+        }, {
+        'X-Requested-With': 'XMLHttpRequest'
         })
 
 class MyLocust(HttpLocust):

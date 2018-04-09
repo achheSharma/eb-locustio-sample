@@ -16,11 +16,11 @@ from locust import HttpLocust, TaskSet, task
 
 #test data
 global test_id
-test_id = 'ksdjfhkdfjhg'
-problem_ids = [1,2,3]
+test_id = 'e6d4468467'
+problem_ids = [1,2]
 problem_language_id_map = {
-    1: [2,3,4],
-    2: [1,2, 3]
+    1: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512],
+    2: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512]
 }
 
 class MyTaskSet(TaskSet):
@@ -37,7 +37,7 @@ class MyTaskSet(TaskSet):
         #todo randomize problem id and lanaguege id
         programming_language_id = 1
         problem_id = 2
-        response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + "&problem_id=" + str(problem_id))
+        response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + str(programming_language_id) + "&problem_id=" + str(problem_id))
 
     # #save code
     @task(1500)

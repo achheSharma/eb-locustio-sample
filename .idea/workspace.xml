@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="243e9873-90f4-45d6-acbc-5fe9b83a971e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/locustfile.py" afterPath="$PROJECT_DIR$/locustfile.py" />
-    </list>
+    <list default="true" id="243e9873-90f4-45d6-acbc-5fe9b83a971e" name="Default" comment="" />
     <ignored path="eb-locustio-sample.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -32,8 +30,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48498845" vertical-offset="165" max-vertical-offset="765">
-              <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.48498845" vertical-offset="540" max-vertical-offset="1140">
+              <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -275,8 +273,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48498845" vertical-offset="165" max-vertical-offset="765">
-          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.48498845" vertical-offset="540" max-vertical-offset="1140">
+          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
           <folding />
         </state>
       </provider>

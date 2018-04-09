@@ -46,14 +46,14 @@ class MyTaskSet(TaskSet):
     @task(600)
     def fetch_code(self):
         #todo randomize problem id and lanaguege id
-        programming_language_id = 1
+        programming_language_id = 4
         problem_id = 2
         response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + str(programming_language_id) + "&problem_id=" + str(problem_id))
 
     # #save code
     @task(1500)
     def save_code(self):
-        programming_language_id = 1
+        programming_language_id = 4
         problem_id = 2
         response = self.client.post("/test/" + str(test_id) + "/save-code/", {
             "problem_id": problem_id, 
@@ -65,14 +65,14 @@ class MyTaskSet(TaskSet):
     # #Submit Code
     @task(80)
     def submit_code(self):
-        programming_language_id = 1
+        programming_language_id = 4
         problem_id = 2
 
         self.client.post("/test/" + test_id + "/evaluate-code/", {
             "problem_id": problem_id, 
             "programming_language_id": programming_language_id,
             "solution_code": 'some code',  #TODO randomize between function code and various type of non functioning code
-            "submission_type": 0
+            "submission_type": 'submit'
         }, {
         'X-Requested-With': 'XMLHttpRequest'
         })

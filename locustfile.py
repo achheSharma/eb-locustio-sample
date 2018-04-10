@@ -56,7 +56,7 @@ def signup(l):
          "candidate_university": "candidate_university",
          "candidate_contact_number": "9923704608"
          })
-    l.client.post( "/test/" + test_id + '/' + "save_candidate_details",{
+    l.client.post( "/test/" + test_id + '/' + "save-candidate-details",{
         "candidate_email": "abhimanyu+" + str(random_user) +  "@interviewbit.com",
         "password": '12ABXYZ12',
          "candidate_name": str(random_user),

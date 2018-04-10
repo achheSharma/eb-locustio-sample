@@ -77,6 +77,19 @@ class MyTaskSet(TaskSet):
         'X-Requested-With': 'XMLHttpRequest'
         })
 
+    #get submission status
+    @task(2400)
+    def submission_status(self):
+        #todo randomize problem id and submission id
+        submission_id = 1050
+        problem_id = 2
+        response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(programming_language_id) + "&submission_id=" + str(submission_id))
+
+    #session poll
+    @task(4000)
+    def session_poll(self):
+        response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30&current_extra_time=0")
+
 class MyLocust(HttpLocust):
     host = os.getenv('TARGET_URL', "http://localhost:3000")
     task_set = MyTaskSet

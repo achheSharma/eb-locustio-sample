@@ -56,6 +56,17 @@ def signup(l):
          "candidate_university": "candidate_university",
          "candidate_contact_number": "9923704608"
          })
+    l.client.post( "/test/" + test_id + '/' + "save_candidate_details",{
+        "candidate_email": "abhimanyu+" + str(random_user) +  "@interviewbit.com",
+        "password": '12ABXYZ12',
+         "candidate_name": str(random_user),
+         "candidate_city": "Random",
+         "candidate_branch": "candidate_branch",
+         "candidate_degree": "candidate_degree",
+         "candidate_university": "candidate_university",
+         "candidate_contact_number": "9923704608",
+         "disclaimer": "on"
+     })
 
 def login(l):
     l.client.post("/users/sign_in/", {"user[email]":"abhimanyu@interviewbit.com", "user[password]":"12!@abAB<>"})

@@ -88,7 +88,7 @@ class MyTaskSet(TaskSet):
     #session poll
     @task(4000)
     def session_poll(self):
-        response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30&current_extra_time=0")
+        response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30" + "&current_extra_time=0")
 
 class MyLocust(HttpLocust):
     host = os.getenv('TARGET_URL', "http://localhost:3000")

@@ -83,7 +83,7 @@ class MyTaskSet(TaskSet):
         #todo randomize problem id and submission id
         submission_id = 1050
         problem_id = 2
-        response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(programming_language_id) + "&submission_id=" + str(submission_id))
+        response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(submission_id))
 
     #session poll
     @task(4000)

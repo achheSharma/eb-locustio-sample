@@ -12,16 +12,32 @@
 import os
 import string
 import random
+import sys
 from locust import HttpLocust, TaskSet, task
 
 #test data
 global test_id
-test_id = 'e6d4468467'
-problem_ids = [1,2]
+test_id = '3d616fd585'
+
+problem_ids = [50,239,524]
 problem_language_id_map = {
-    1: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512],
-    2: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512]
+    50: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512],
+    239: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512],
+    524: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512]
 }
+
+def signup(l):
+    random_user = random.randint(1,sys.maxint)
+    l.client.post("/test/a/load_test/", {
+        "candidate_email": "abhimanyu+" + str(random_user) +  "@interviewbit.com",
+        "password": '12ABXYZ12',
+         "candidate_name": str(random_user),
+         "candidate_city": "Random",
+         "candidate_branch": "candidate_branch",
+         "candidate_degree": "candidate_degree",
+         "candidate_university": "candidate_university",
+         "candidate_contact_number": "9923704608"
+         })
 
 def login(l):
     l.client.post("/users/sign_in/", {"user[email]":"abhimanyu@interviewbit.com", "user[password]":"12!@abAB<>"})
@@ -32,7 +48,7 @@ def logout(l):
 class MyTaskSet(TaskSet):
     
     def on_start(self):
-        login(self)
+        signup(self)
 
     def on_stop(self):
         logout(self)
@@ -44,17 +60,18 @@ class MyTaskSet(TaskSet):
 
     #fetch code
     @task(600)
-    def fetch_code(self):
-        #todo randomize problem id and lanaguege id
-        programming_language_id = 4
-        problem_id = 2
+    def fetch_code(self):    
+        problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
+        supported_languages = problem_language_id_map[problem_id]
+        programming_language_id = supported_languages[random.randint(0,(len(supported_languages) - 1))]
         response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + str(programming_language_id) + "&problem_id=" + str(problem_id))
 
     # #save code
     @task(1500)
     def save_code(self):
-        programming_language_id = 4
-        problem_id = 2
+        problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
+        supported_languages = problem_language_id_map[problem_id]
+        programming_language_id = supported_languages[random.randint(0,(len(supported_languages) - 1))]
         response = self.client.post("/test/" + str(test_id) + "/save-code/", {
             "problem_id": problem_id, 
             "programming_language_id": programming_language_id,
@@ -65,8 +82,9 @@ class MyTaskSet(TaskSet):
     # #Submit Code
     @task(80)
     def submit_code(self):
-        programming_language_id = 4
-        problem_id = 2
+        problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
+        supported_languages = problem_language_id_map[problem_id]
+        programming_language_id = supported_languages[random.randint(0,(len(supported_languages) - 1))]
 
         self.client.post("/test/" + test_id + "/evaluate-code/", {
             "problem_id": problem_id, 
@@ -79,10 +97,9 @@ class MyTaskSet(TaskSet):
 
     #get submission status
     @task(2400)
-    def submission_status(self):
-        #todo randomize problem id and submission id
-        submission_id = 1050
-        problem_id = 2
+    def submission_status(self):        
+        problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
+        submission_id = 2667
         response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(submission_id))
 
     #session poll

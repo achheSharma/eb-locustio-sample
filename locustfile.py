@@ -13,7 +13,16 @@ import os
 import string
 import random
 import sys
+import logging
+import json
+
 from locust import HttpLocust, TaskSet, task
+from threading import Timer
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+logger.info('INIT')
 
 #test data
 global test_id
@@ -56,6 +65,7 @@ def signup(l):
          "candidate_university": "candidate_university",
          "candidate_contact_number": "9923704608"
          })
+
     l.client.post( "/test/" + test_id + '/' + "save-candidate-details",{
         "candidate_email": "abhimanyu+" + str(random_user) +  "@interviewbit.com",
         "password": '12ABXYZ12',
@@ -65,7 +75,8 @@ def signup(l):
          "candidate_degree": "candidate_degree",
          "candidate_university": "candidate_university",
          "candidate_contact_number": "9923704608",
-         "disclaimer": "on"
+         "disclaimer": "on",
+         "slug": "dkjhfkdfjhg"
      })
 
 def login(l):
@@ -73,6 +84,9 @@ def login(l):
 
 def logout(l):
     l.client.post("/users/sign_out/", {"_method":"delete"})
+
+def check_status(l, test_id, problem_id, submission_id):
+    response = l.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(submission_id))
 
 class MyTaskSet(TaskSet):
     
@@ -100,7 +114,7 @@ class MyTaskSet(TaskSet):
     def save_code(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
-        programming_language_id = supported_languages[random.randint(0,(len(supported_languages) - 1))]
+        programming_language_id = 511#supported_languages[random.randint(0,(len(supported_languages) - 1))]
         response = self.client.post("/test/" + str(test_id) + "/save-code/", {
             "problem_id": problem_id, 
             "programming_language_id": 511,
@@ -115,21 +129,26 @@ class MyTaskSet(TaskSet):
         supported_languages = problem_language_id_map[problem_id]
         programming_language_id = supported_languages[random.randint(0,(len(supported_languages) - 1))]
 
-        self.client.post("/test/" + test_id + "/evaluate-code/", {
+        response = self.client.post("/test/" + test_id + "/evaluate-code/", {
             "problem_id": problem_id, 
             "programming_language_id": 511,
             "submission_content": problem_codes[problem_id][2],
             "submission_type": 'submit'
         }, {
-        'X-Requested-With': 'XMLHttpRequest'
-        })
+            'X-Requested-With': 'XMLHttpRequest'
+        })        
+        logger.info(response.content)
+        resp_json = json.loads(response.content)
+
+        for i in range(1,30):
+            #check_status(self, test_id, problem_id, resp_json['submission_id'])
+            r = Timer(i, check_status, (self, test_id, problem_id, resp_json['submission_id']))
+            r.start()
 
     #get submission status
-    @task(2400)
-    def submission_status(self):        
-        problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
-        submission_id = 2667
-        response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(submission_id))
+    #@task(2400)
+    #def submission_status(self):                    
+        #response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(response.submission_id))        
 
     #session poll
     @task(4000)

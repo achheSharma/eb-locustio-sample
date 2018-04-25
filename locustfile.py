@@ -28,7 +28,7 @@ logger.info('INIT')
 global test_id
 test_id = '3d616fd585'
 
-problem_ids = [50,239,524]
+problem_ids = [1, 50]
 problem_language_id_map = {
     1: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512],
     50: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512]

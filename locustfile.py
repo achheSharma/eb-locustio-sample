@@ -30,26 +30,20 @@ test_id = '3d616fd585'
 
 problem_ids = [50,239,524]
 problem_language_id_map = {
-    50: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512],
-    239: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512],
-    524: [4, 11, 27, 35, 43, 44, 55, 114, 116, 510, 511, 512]
+    1: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512]
+    50: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512]
 }
 
 problem_codes = {
+    1: [
+        'syntax error',
+        'wrong output',
+        'public class Solution {public int canCompleteCircuit(final List<Integer> gas, final List<Integer> cost) {int currentFuel = 0;int remaining = 0;int total = 0;int start = 0;for(int i = 0; i < gas.size(); i++){remaining = gas.get(i) - cost.get(i);if(currentFuel >= 0)currentFuel += remaining;else{currentFuel = remaining;start = i;}total += remaining;}return total >= 0 ? start : -1;}}'
+        ],
     50: [
         'syntax error',
         'wrong output',
-        'public class Solution {// DO NOT MODIFY THE LISTpublic ArrayList<Integer> slidingMaximum(final List<Integer> A, int B) {int n = A.size();int i;ArrayList<Integer> res = new ArrayList<>();int window = Math.min(A.size(), B);Deque<Node> deque = new LinkedList<>();int val;Node ans;      for (i = 0; i < window - 1; i++) {val = A.get(i);           while (!deque.isEmpty() && deque.peekFirst().val <= val) {deque.pollFirst();}           deque.addFirst(new Node(i, val));}      for (; i < n; i++) {val = A.get(i);         while (!deque.isEmpty() && (i - deque.peekLast().index >= window)) {deque.pollLast();}          while (!deque.isEmpty() && deque.peekFirst().val <= val) {deque.pollFirst();}           deque.addFirst(new Node(i, val));           ans = deque.peekLast();         res.add(ans.val);}      return res;}    class Node {int val;int index;      public Node(int index, int val) {this.index = index;this.val = val;}}}'
-        ],
-    239: [
-        'syntax error',
-        'wrong output',
-        'public class Solution {       static class Node {       int key;       int val;       Node prev, next;       public Node(int key, int val) {           this.key = key;           this.val = val;       }   }       Node head;   Node tail;   int N;   int MAX;   HashMap<Integer, Node> mMap;       public Solution(int capacity) {       head = null;       tail = null;       MAX = capacity;       N = 0;       mMap = new HashMap<>();   }       public int get(int key) {               if (N == 0)           return -1;               if (mMap.containsKey(key)) {                       Node node = mMap.get(key);                       if (key == head.key) {               return node.val;           }                       if (tail.key == key) {               tail = tail.prev;           }                       Node temp = node.prev;           temp.next = node.next;           temp = node.next;           if (temp != null)               temp.prev = node.prev;                           node.next = head;           head.prev = node;           node.prev = null;           head = node;                       return node.val;       }                       return -1;   }       public void set(int key, int value) {               if (mMap.containsKey(key)) {                       Node node = mMap.get(key);           Node temp;                       if (node.key == head.key) {               node.val = value;               return;           }                       if (tail.key == key) {               tail = tail.prev;           }                       temp = node.prev;           temp.next = node.next;           temp = node.next;           if (temp != null)               temp.prev = node.prev;                           node.next = head;           head.prev = node;           node.prev = null;           head = node;                       node.val = value;                       return;       }               if (N == MAX) {           if (tail != null) {               mMap.remove(tail.key);               tail = tail.prev;                               if (tail != null) {                   tail.next.prev = null;                   tail.next = null;               }               N--;           }       }               Node node = new Node(key, value);       node.next = head;       if (head != null)           head.prev = node;           head = node;       N++;               if (N == 1)           tail = head;               mMap.put(key, node);       }}'
-        ],
-    524: [
-        'syntax error',
-        'wrong output',
-        'public class Solution {public int canCompleteCircuit(final List<Integer> gas, final List<Integer> cost) {      int n;int petrol = 0;int i;int min = 0;int temp = 0;int lastPos = 0;        n = gas.size();     for (i = 0; i < n; i++) {petrol += gas.get(i);petrol -= cost.get(i);lastPos = Math.max(petrol, gas.get(i) - cost.get(i) + lastPos);         if (lastPos >= 0) {if (min == -1)min = i;} else {min = -1;}         lastPos = Math.max(0, lastPos);}        if (petrol < 0)return -1;               return min;     }}'
+        'public class Solution {public ArrayList<Integer> slidingMaximum(final List<Integer> a, int b) {ArrayList<Integer> result = new ArrayList<>();Deque<Integer> dq = new LinkedList<>();        for(int i=0; i<b; i++){while(!dq.isEmpty()&& a.get(dq.peekLast())<a.get(i))dq.pollLast();dq.offerLast(i);                }for(int i = b ; i<a.size() ; i++){result.add(a.get(dq.peekFirst()));int currWindowStartIndex = i-b+1;while(!dq.isEmpty() && dq.peek()<currWindowStartIndex)dq.pollFirst();while(!dq.isEmpty()&& a.get(dq.peekLast())<a.get(i))dq.pollLast();dq.offerLast(i);  }result.add(a.get(dq.peekFirst()));return result;}}'
         ]
 }
 

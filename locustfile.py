@@ -117,7 +117,7 @@ class MyTaskSet(TaskSet):
         })
 
     # #Submit Code
-    @task(80)
+    @task(20)
     def submit_code(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]

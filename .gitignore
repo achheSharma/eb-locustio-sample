@@ -15,3 +15,5 @@ locustfile.pyc
 .idea/vcs.xml
 
 .idea/workspace.xml
+
+.idea/eb-locustio-sample.iml

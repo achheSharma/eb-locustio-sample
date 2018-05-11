@@ -134,10 +134,12 @@ class MyTaskSet(TaskSet):
         logger.info(response.content)
         resp_json = json.loads(response.content)
 
-        for i in range(1,30):
+        r = Timer(10, check_status, (self, test_id, problem_id, resp_json['submission_id']))
+        r.start()
+        #for i in range(1,30):
             #check_status(self, test_id, problem_id, resp_json['submission_id'])
-            r = Timer(i, check_status, (self, test_id, problem_id, resp_json['submission_id']))
-            r.start()
+            #r = Timer(i, check_status, (self, test_id, problem_id, resp_json['submission_id']))
+            #r.start()
 
     #get submission status
     #@task(2400)

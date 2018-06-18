@@ -151,8 +151,28 @@ class MyTaskSet(TaskSet):
     def session_poll(self):
         response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30" + "&current_extra_time=0")
 
+class NewUserTasks(TaskSet):
+    #Open landing page
+    @task(100)
+    def index(self):
+        response = self.client.get("/")
+    @task(90)
+    def open_dashboard(self):
+        response = self.client.get("/dashboard/")
+    @task(81)
+    def open_programming(self):
+        response = self.client.get("/courses/programming/")
+    @task(73)
+    def open_topic(self):
+        response = self.client.get("/courses/programming/topics/arrays/")
+    @task(66)
+    def open_problem(self):
+        response = self.client.get("/problems/max-sum-contiguous-subarray/")
+
+
+
 class MyLocust(HttpLocust):
     host = os.getenv('TARGET_URL', "http://localhost:3000")
-    task_set = MyTaskSet
+    task_set = NewUserTasks
     min_wait = 90
     max_wait = 100

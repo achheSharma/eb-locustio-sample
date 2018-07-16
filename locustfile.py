@@ -60,7 +60,7 @@ def signup(l):
          "candidate_university": "candidate_university",
          "candidate_contact_number": "9923704608"
          })
-
+'''
     l.client.post( "/test/" + test_id + '/' + "save-candidate-details",{
         "candidate_email": "abhimanyu+" + str(random_user) +  "@interviewbit.com",
         "password": '12ABXYZ12',
@@ -73,7 +73,7 @@ def signup(l):
          "disclaimer": "on",
          "slug": "dkjhfkdfjhg"
      })
-
+'''
 def login(l):
     l.client.post("/users/sign_in/", {"user[email]":"abhimanyu@interviewbit.com", "user[password]":"12!@abAB<>"})
 

@@ -50,7 +50,7 @@ problem_codes = {
 
 def signup(l):
     random_user = random.randint(1,sys.maxint)
-    l.client.post("/test/a/load_test/", {
+    response = l.client.post("/test/a/load_test/", {
         "candidate_email": "loadtestinterviewbit+" + str(random_user) +  "@gmail.com",
         "password": '12ABXYZ12',
          "candidate_name": str(random_user),

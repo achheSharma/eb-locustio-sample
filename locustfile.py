@@ -15,6 +15,7 @@ import random
 import sys
 import logging
 import json
+import datetime
 
 from locust import HttpLocust, TaskSet, task
 from threading import Timer
@@ -91,12 +92,34 @@ class MyTaskSet(TaskSet):
         logout(self)
 
     #open the test programming_language_id
-    @task(100)
+    @task(6)
     def index(self):    
         response = self.client.get("/test/" + test_id + '/')
 
+    #record event
+    @task(33)
+    def record_event(self):
+        response = self.client.post("/test/" + test_id + '/record-event/',{
+            "event_type": "jhsdfgjdsf",
+            "event_value": "kjdkjdhfgkjdfhgifderiuy eiruty idufgy difuyg",
+            "timestamp": datetime.datetime.now()
+        })
+
+    #mark problem opened
+    @task(13)
+    def mark_problem_opened(self):
+        problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
+        response = self.client.post("/test/" + str(test_id) + "/mark-problem-opened/",{
+            "problem_id": problem_id
+        })
+
+    #get live problems
+    @task(6)
+    def get_live_problems(self):
+        response = self.client.get("/test/" + str(test_id) + "/live-problems/")
+
     #fetch code
-    @task(600)
+    @task(22)
     def fetch_code(self):    
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
@@ -104,7 +127,7 @@ class MyTaskSet(TaskSet):
         response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + str(programming_language_id) + "&problem_id=" + str(problem_id))
 
     # #save code
-    @task(1500)
+    @task(52)
     def save_code(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
@@ -117,7 +140,7 @@ class MyTaskSet(TaskSet):
         })
 
     # #Submit Code
-    @task(20)
+    @task(22)
     def submit_code(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
@@ -147,32 +170,32 @@ class MyTaskSet(TaskSet):
         #response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(response.submission_id))        
 
     #session poll
-    @task(4000)
+    @task(360)
     def session_poll(self):
         response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30" + "&current_extra_time=0")
 
-class NewUserTasks(TaskSet):
+#class NewUserTasks(TaskSet):
     #Open landing page
-    @task(100)
-    def index(self):
-        response = self.client.get("/")
-    @task(90)
-    def open_dashboard(self):
-        response = self.client.get("/dashboard/")
-    @task(81)
-    def open_programming(self):
-        response = self.client.get("/courses/programming/")
-    @task(73)
-    def open_topic(self):
-        response = self.client.get("/courses/programming/topics/arrays/")
-    @task(66)
-    def open_problem(self):
-        response = self.client.get("/problems/max-sum-contiguous-subarray/")
+    #@task(100)
+    #def index(self):
+    #    response = self.client.get("/")
+    #@task(90)
+    #def open_dashboard(self):
+    #    response = self.client.get("/dashboard/")
+    #@task(81)
+    #def open_programming(self):
+    #    response = self.client.get("/courses/programming/")
+    #@task(73)
+    #def open_topic(self):
+    #    response = self.client.get("/courses/programming/topics/arrays/")
+    #@task(66)
+    #def open_problem(self):
+    #    response = self.client.get("/problems/max-sum-contiguous-subarray/")
 
 
 
 class MyLocust(HttpLocust):
     host = os.getenv('TARGET_URL', "http://localhost:3000")
-    task_set = NewUserTasks
+    task_set = MyTaskSet
     min_wait = 90
     max_wait = 100

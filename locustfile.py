@@ -62,7 +62,7 @@ def signup(l):
          })
 
     l.client.post( "/test/" + test_id + '/' + "save-candidate-details",{
-        "candidate_email": "abhimanyu+" + str(random_user) +  "@interviewbit.com",
+        "candidate_email": "loadtestinterviewbit+" + str(random_user) +  "@gmail.com",
         "password": '12ABXYZ12',
          "candidate_name": str(random_user),
          "candidate_city": "Random",

@@ -170,7 +170,7 @@ class MyTaskSet(TaskSet):
         #response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(response.submission_id))        
 
     #session poll
-    @task(90)
+    @task(360)
     def session_poll(self):
         response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30" + "&current_extra_time=0")
 

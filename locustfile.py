@@ -35,15 +35,17 @@ problem_language_id_map = {
     50: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512]
 }
 
+random_matrix = [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+
 problem_codes = {
     1: [
         'syntax error',
-        'wrong output',
+        'public class Solution {public int canCompleteCircuit(final List<Integer> gas, final List<Integer> cost) {return 1;}}',
         'public class Solution {public int canCompleteCircuit(final List<Integer> gas, final List<Integer> cost) {int currentFuel = 0;int remaining = 0;int total = 0;int start = 0;for(int i = 0; i < gas.size(); i++){remaining = gas.get(i) - cost.get(i);if(currentFuel >= 0)currentFuel += remaining;else{currentFuel = remaining;start = i;}total += remaining;}return total >= 0 ? start : -1;}}'
         ],
     50: [
         'syntax error',
-        'wrong output',
+        'public class Solution {public ArrayList<Integer> slidingMaximum(final List<Integer> a, int b) {ArrayList<Integer> result = new ArrayList<>(); return result;}}',
         'public class Solution {public ArrayList<Integer> slidingMaximum(final List<Integer> a, int b) {ArrayList<Integer> result = new ArrayList<>();Deque<Integer> dq = new LinkedList<>();        for(int i=0; i<b; i++){while(!dq.isEmpty()&& a.get(dq.peekLast())<a.get(i))dq.pollLast();dq.offerLast(i);                }for(int i = b ; i<a.size() ; i++){result.add(a.get(dq.peekFirst()));int currWindowStartIndex = i-b+1;while(!dq.isEmpty() && dq.peek()<currWindowStartIndex)dq.pollFirst();while(!dq.isEmpty()&& a.get(dq.peekLast())<a.get(i))dq.pollLast();dq.offerLast(i);  }result.add(a.get(dq.peekFirst()));return result;}}'
         ]
 }
@@ -136,7 +138,7 @@ class MyTaskSet(TaskSet):
             "problem_id": problem_id, 
             "programming_language_id": 511,
             "is_objective": 'false',
-            "problem_code": problem_codes[problem_id][2]
+            "problem_code": problem_codes[problem_id][random.choice(random_matrix)]
         })
 
     # #Submit Code
@@ -149,7 +151,7 @@ class MyTaskSet(TaskSet):
         response = self.client.post("/test/" + test_id + "/evaluate-code/", {
             "problem_id": problem_id, 
             "programming_language_id": 511,
-            "submission_content": problem_codes[problem_id][2],
+            "submission_content": problem_codes[problem_id][random.choice(random_matrix)],
             "submission_type": 'submit'
         }, {
             'X-Requested-With': 'XMLHttpRequest'

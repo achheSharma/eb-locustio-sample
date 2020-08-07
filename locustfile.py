@@ -174,10 +174,16 @@ class MyTaskSet(TaskSet):
     #get submission status
     #@task(2400)
     #def submission_status(self):                    
-        #response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(response.submission_id))        
+        #response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(response.submission_id))
+
+    @task(22)
+    def get_submission_status(self):    
+        problem_id = 1
+        user_submission_id = 1
+        response = self.client.get("/test/" + str(test_id) + "/status/?user_submission_id=" + str(user_submission_id) + "&problem_id=" + str(problem_id))
 
     #session poll
-    @task(90)
+    @task(20)
     def session_poll(self):
         response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30" + "&current_extra_time=0")
 

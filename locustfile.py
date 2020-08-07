@@ -16,8 +16,9 @@ import sys
 import logging
 import json
 import datetime
+import pyquery
 
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 from threading import Timer
 
 logging.basicConfig(level=logging.INFO)
@@ -76,8 +77,8 @@ def signup(l):
          "slug": "dkjhfkdfjhg"
      })
 
-def login(l):
-    l.client.post("/users/sign_in/", {"user[email]":"abhimanyu@interviewbit.com", "user[password]":"12!@abAB<>"})
+def login(l, auth_token=None):
+    l.client.post("/users/sign_in/", {"user[email]":"testinguser@interviewbit.com", "user[password]":"testinguser", "authenticity_token": auth_token})
 
 def logout(l):
     l.client.post("/users/sign_out/", {"_method":"delete"})
@@ -88,24 +89,28 @@ def check_status(l, test_id, problem_id, submission_id):
 class MyTaskSet(TaskSet):
     
     def on_start(self):
-        signup(self)
+        resp = self.client.get("/users/sign_in")
+        dom = pyquery.PyQuery(resp.content)
+        auth_token = dom.find('input[name="authenticity_token"]')[0].attrib['value']
+
+        login(self, auth_token)
 
     def on_stop(self):
         logout(self)
 
     #open the test programming_language_id
     @task(10)
-    def index(self):    
+    def index(self):
         response = self.client.get("/test/" + test_id + '/')
 
     #record event
-    @task(33)
-    def record_event(self):
-        response = self.client.post("/test/" + test_id + '/record-event/',{
-            "event_type": "jhsdfgjdsf",
-            "event_value": "kjdkjdhfgkjdfhgifderiuy eiruty idufgy difuyg",
-            "timestamp": datetime.datetime.now()
-        })
+    # @task(33)
+    # def record_event(self):
+    #     response = self.client.post("/test/" + test_id + '/record-event/',{
+    #         "event_type": "jhsdfgjdsf",
+    #         "event_value": "kjdkjdhfgkjdfhgifderiuy eiruty idufgy difuyg",
+    #         "timestamp": datetime.datetime.now()
+    #     })
 
     #mark problem opened
     @task(13)
@@ -115,7 +120,7 @@ class MyTaskSet(TaskSet):
             "problem_id": problem_id
         })
 
-    #get live problems
+    # #get live problems
     @task(10)
     def get_live_problems(self):
         response = self.client.get("/test/" + str(test_id) + "/live-problems/")
@@ -196,8 +201,8 @@ class MyTaskSet(TaskSet):
 
 
 
-class MyLocust(HttpLocust):
+class MyLocust(HttpUser):
     host = os.getenv('TARGET_URL', "https://staging.scaler.com")
-    task_set = MyTaskSet
+    tasks = {MyTaskSet:2}
     min_wait = 90
     max_wait = 100

@@ -179,7 +179,7 @@ class MyTaskSet(TaskSet):
     @task(22)
     def get_submission_status(self):    
         problem_id = 1
-        user_submission_id = 1
+        user_submission_id = 93354645
         response = self.client.get("/test/" + str(test_id) + "/status/?user_submission_id=" + str(user_submission_id) + "&problem_id=" + str(problem_id))
 
     #session poll

@@ -89,11 +89,11 @@ def check_status(l, test_id, problem_id, submission_id):
 class MyTaskSet(TaskSet):
     
     def on_start(self):
-        resp = self.client.get("/users/sign_in")
-        dom = pyquery.PyQuery(resp.content)
-        auth_token = dom.find('input[name="authenticity_token"]')[0].attrib['value']
+        # resp = self.client.get("/users/sign_in")
+        # dom = pyquery.PyQuery(resp.content)
+        # auth_token = dom.find('input[name="authenticity_token"]')[0].attrib['value']
 
-        login(self, auth_token)
+        signup(self)
 
     def on_stop(self):
         logout(self)
@@ -113,20 +113,20 @@ class MyTaskSet(TaskSet):
     #     })
 
     #mark problem opened
-    @task(13)
+    @task(10)
     def mark_problem_opened(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         response = self.client.post("/test/" + str(test_id) + "/mark-problem-opened/",{
             "problem_id": problem_id
         })
 
-    # #get live problems
+    #get live problems
     @task(10)
     def get_live_problems(self):
         response = self.client.get("/test/" + str(test_id) + "/live-problems/")
 
     #fetch code
-    @task(22)
+    @task(15)
     def fetch_code(self):    
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
@@ -134,7 +134,7 @@ class MyTaskSet(TaskSet):
         response = self.client.get("/test/" + str(test_id) + "/get-code/?programming_language_id=" + str(programming_language_id) + "&problem_id=" + str(problem_id))
 
     # #save code
-    @task(52)
+    @task(30)
     def save_code(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
@@ -147,7 +147,7 @@ class MyTaskSet(TaskSet):
         })
 
     # #Submit Code
-    @task(22)
+    @task(10)
     def submit_code(self):
         problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
         supported_languages = problem_language_id_map[problem_id]
@@ -176,14 +176,14 @@ class MyTaskSet(TaskSet):
     #def submission_status(self):                    
         #response = self.client.get("/test/" + str(test_id) + "/status/?problem_id=" + str(problem_id) + "&submission_id=" + str(response.submission_id))
 
-    @task(22)
-    def get_submission_status(self):    
-        problem_id = 1
-        user_submission_id = 93354645
-        response = self.client.get("/test/" + str(test_id) + "/status/?user_submission_id=" + str(user_submission_id) + "&problem_id=" + str(problem_id))
+    # @task(15)
+    # def get_submission_status(self):    
+    #     problem_id = 1
+    #     user_submission_id = 93354645
+    #     response = self.client.get("/test/" + str(test_id) + "/status/?user_submission_id=" + str(user_submission_id) + "&problem_id=" + str(problem_id))
 
     #session poll
-    @task(20)
+    @task(5)
     def session_poll(self):
         response = self.client.get("/test/" + str(test_id) + "/poll/?current_duration=30" + "&current_extra_time=0")
 

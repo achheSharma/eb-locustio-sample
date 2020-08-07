@@ -17,7 +17,7 @@ import logging
 import json
 import datetime
 
-from locust import HttpUser, TaskSet, task
+from locust import HttpLocust, TaskSet, task
 from threading import Timer
 
 logging.basicConfig(level=logging.INFO)
@@ -196,8 +196,8 @@ class MyTaskSet(TaskSet):
 
 
 
-class MyLocust(HttpUser):
-    host = os.getenv('TARGET_URL', "http://localhost:3000")
-    tasks = {MyTaskSet:2}
+class MyLocust(HttpLocust):
+    host = os.getenv('TARGET_URL', "https://staging.scaler.com")
+    task_set = MyTaskSet
     min_wait = 90
     max_wait = 100

@@ -18,7 +18,7 @@ logger.info('INIT')
 #test data
 global test_id
 test_id = '5645c712df' #8a2c3d05c2 local, 5645c712df staging
-problem_ids = [382, 900] #[228, 382, 900, 1195, 1262]
+problem_ids = [228, 382, 900, 1195, 1262]
 problem_language_id_map = {
   228: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512],
   382: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512],
@@ -26,32 +26,43 @@ problem_language_id_map = {
   1195: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512],
   1262: [4, 11, 27, 35, 39, 42, 43, 44, 55, 114, 116, 510, 511, 512],
 }
-random_matrix = [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+
+random_matrix = [0,1,1,2,2,2,3,3,4,4]
 problem_codes = {
   228: [
     'syntax error',
     'int Solution::isSymmetric(TreeNode* A) { return 0; }',
-    'vector<int>ans; void inOrder(TreeNode* A) {if(A==NULL)return; inOrder(A->left); ans.push_back(A->val); inOrder(A->right);} int Solution::isSymmetric(TreeNode* A) {ans.clear();inOrder(A);int l=0;int r=ans.size()-1;while(l<r){if(ans[l]!=ans[r])return 0;l++;r--;}return 1;}'
+    'vector<int>ans; void inOrder(TreeNode* A) {if(A==NULL)return; inOrder(A->left); ans.push_back(A->val); inOrder(A->right);} int Solution::isSymmetric(TreeNode* A) {ans.clear();inOrder(A);int l=0;int r=ans.size()-1;while(l<r){if(ans[l]!=ans[r])return 0;l++;r--;}return 1;}',
+    'int Solution::isSymmetric(TreeNode* A) { int i=1; while(true) {i+=1;} return 0; }',
+    'int Solution::isSymmetric(TreeNode* A) { isSymmetric(A); }',
   ],
   382: [
     'syntax error',
     'vector<string> Solution::fizzBuzz(int A) {return 0;}',
-    'vector<string> Solution::fizzBuzz(int A) {vector<string> ans;for (int num = 1; num <= A; num++) {if ((num % 3 == 0) && (num % 5 == 0)) {ans.push_back("FizzBuzz");} else if(num % 3 == 0) {ans.push_back("Fizz");} else if(num % 5 == 0) {ans.push_back("Buzz");} else {string numStr;for(int i = num; i > 0; i /= 10) {numStr = char((i % 10) + \'0\') + numStr;}ans.push_back(numStr);}}return ans;}'
+    'vector<string> Solution::fizzBuzz(int A) {vector<string> ans;for (int num = 1; num <= A; num++) {if ((num % 3 == 0) && (num % 5 == 0)) {ans.push_back("FizzBuzz");} else if(num % 3 == 0) {ans.push_back("Fizz");} else if(num % 5 == 0) {ans.push_back("Buzz");} else {string numStr;for(int i = num; i > 0; i /= 10) {numStr = char((i % 10) + \'0\') + numStr;}ans.push_back(numStr);}}return ans;}',
+    'vector<string> Solution::fizzBuzz(int A) { int i=1; while(true) {i+=1;} return 0; }',
+    'vector<string> Solution::fizzBuzz(int A) {vector<string> s = fizzBuzz(A);}',
   ],
   900: [
     'syntax error',
     'string Solution::solve(string A) {return 0;}',
-    'string Solution::solve(string A) {string s;s=A;int j=s.length();int len=j;j=j-1;int count=0;int i=0;string ans;if (s == string(s.rbegin(), s.rend())){if(len%2==1)ans="YES";elseans="NO";}else{while(i<=j){if(s[i]!=s[j])count++;i++;j--;}if(count>1)ans="NO";elseans="YES";}return ans;}'
+    'string Solution::solve(string A) {string s;s=A;int j=s.length();int len=j;j=j-1;int count=0;int i=0;string ans;if (s == string(s.rbegin(), s.rend())){if(len%2==1)ans="YES";elseans="NO";}else{while(i<=j){if(s[i]!=s[j])count++;i++;j--;}if(count>1)ans="NO";elseans="YES";}return ans;}',
+    'string Solution::solve(string A) { int i=1; while(true) {i+=1;} return 0; }',
+    'string Solution::solve(string A) {string s = solve(A);}',
   ],
   1195: [
     'syntax error',
     'int Solution::solve(vector<int> &A) {return 0;}',
-    'int Solution::solve(vector<int> &A) {int ans = 0;int mini = 1e9, maxi = -1e9;for(auto &i : A) {mini = min(mini, i);maxi = max(maxi, i);}for(auto &i : A) {if(mini < i and i < maxi)ans += 1;}return ans;}'
+    'int Solution::solve(vector<int> &A) {int ans = 0;int mini = 1e9, maxi = -1e9;for(auto &i : A) {mini = min(mini, i);maxi = max(maxi, i);}for(auto &i : A) {if(mini < i and i < maxi)ans += 1;}return ans;}',
+    'int Solution::solve(vector<int> &A) { int i=1; while(true) {i+=1;} return 0; }',
+    'int Solution::solve(vector<int> &A) {int s = solve(A);}',
   ],
   1262: [
     'syntax error',
     'int Solution::solve(int A) {return 0;}',
-    'int Solution::solve(int A) {return A == 2 ? 1 : 2;}'
+    'int Solution::solve(int A) {return A == 2 ? 1 : 2;}',
+    'int Solution::solve(int A) { int i=1; while(true) {i+=1;} return 0; }',
+    'int Solution::solve(int A) {int s = solve(A);}',
   ]
 }
 # def signup(l):
@@ -238,31 +249,31 @@ class HTTPTaskSet(TaskSet):
     logout(self)
 
   # Live Test Index
-  @task(1)
-  def index(self):
-    time_to_wait = 10
-    start = time.time()
-    response = self.client.get("/test/" + test_id + '/')
-    end = time.time()
-    if end - start > time_to_wait:
-      self._sleep(start + time_to_wait - end)
+  # @task(1)
+  # def index(self):
+  #   time_to_wait = 10
+  #   start = time.time()
+  #   response = self.client.get("/test/" + test_id + '/')
+  #   end = time.time()
+  #   if end - start > time_to_wait:
+  #     self._sleep(start + time_to_wait - end)
 
-  # Get Live Problems
-  @task(1)
-  def get_live_problems(self):
-    time_to_wait = 10
-    start = time.time()
-    response = self.client.get("/test/" + str(test_id) + "/live-problems/")
-    end = time.time()
-    if end - start > time_to_wait:
-      self._sleep(start + time_to_wait - end)
+  # # Get Live Problems
+  # @task(1)
+  # def get_live_problems(self):
+  #   time_to_wait = 10
+  #   start = time.time()
+  #   response = self.client.get("/test/" + str(test_id) + "/live-problems/")
+  #   end = time.time()
+  #   if end - start > time_to_wait:
+  #     self._sleep(start + time_to_wait - end)
 
   # Submit Code
   @task(1)
   def submit_code(self):
     problem_id = problem_ids[random.randint(0,(len(problem_ids) - 1))]
     supported_languages = problem_language_id_map[problem_id]
-    programming_language_id = supported_languages[random.randint(0,(len(supported_languages) - 1))]
+    programming_language_id = 44 or supported_languages[random.randint(0,(len(supported_languages) - 1))]
     response = self.client.post("/test/" + test_id + "/evaluate-code/", {
       "problem_id": problem_id, 
       "programming_language_id": programming_language_id,
@@ -271,7 +282,7 @@ class HTTPTaskSet(TaskSet):
     }, {
       'X-Requested-With': 'XMLHttpRequest'
     })        
-    logger.info(response.content)
+    # logger.info(response.content)
     resp_json = json.loads(response.content)
     r = Timer(10, check_status, (self, test_id, problem_id, resp_json['submission_id']))
     r.start()
